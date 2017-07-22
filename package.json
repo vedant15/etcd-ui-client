@@ -1,6 +1,6 @@
 {
   "name": "etcd-ui-client",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "just another ui for etcd",
   "main": "main.js",
   "scripts": {
@@ -14,9 +14,12 @@
     "electron": "^1.6.11",
     "jquery": "^3.2.1",
     "request": "^2.81.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "grpc": "^1.4.1",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "electron-packager": "^8.7.2",
     "electron-rebuild": "^1.5.11"
   }
 }

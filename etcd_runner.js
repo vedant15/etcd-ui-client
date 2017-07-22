@@ -1,9 +1,11 @@
 const {ipcRenderer} = require('electron');
 const util = require('util');
+const uuid = require('uuid');
 
 const TABLE_KEY_PREFIX = 'e9e6285c';
 const HIDDEN_KEY_ID_SELECTOR = '#selected_key';
 var valueRegistry = {};
+var tableIdRegistry = {};
 
 
 ipcRenderer.on('createKeyResponse', function(event, response){
@@ -27,6 +29,7 @@ ipcRenderer.on('getKeyResponse', function(event, response){
         alert('Request to get Key Failed: ' + JSON.stringify(response.err));
     } else {
         valueRegistry = {};
+        tableIdRegistry = {};
         $('#key_details_data').html('<pre></pre>');
         $('#selected_key').val('');
         $('#keys_name_table').html(generateKeysTable(response.result));
@@ -46,14 +49,14 @@ function initalizeConnection () {
         } else {
             $('#connection_form').hide();
             $('.main-app').css('z-index', 1);
-            $('#footer_title').html('Connected to: ' + (connectionDetails.connectionString || 'https://127.0.0.1:2379'))
+            $('#footer_title').html('Connected to: ' + (connectionDetails.connectionString || '127.0.0.1:2379'));
         }
     });
     ipcRenderer.send('createConnection', connectionDetails);
 }
 
 function getKeyTableId (key) {
-    return TABLE_KEY_PREFIX + '-' + key;
+    return tableIdRegistry[key];
 }
 
 function generateKeysTable (kvs) {
@@ -61,6 +64,7 @@ function generateKeysTable (kvs) {
 
     for(let i = 0; i < kvs.length; i++) {
         valueRegistry[kvs[i].key] = kvs[i].value;
+        tableIdRegistry[kvs[i].key] = uuid.v4();
         responseHtml += util.format('<tr id="%s" onclick="switchSelectedKey(\'%s\')"><td>%s</td></tr>', getKeyTableId(kvs[i].key), kvs[i].key, kvs[i].key);
     }
     return responseHtml + '</tbody>';
