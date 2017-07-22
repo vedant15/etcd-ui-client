@@ -5,184 +5,88 @@
     <title>ETCD UI Client</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/photon.min.css">
-    <link rel="stylesheet" href="css/custom_app.css">
+    <link rel="stylesheet" href="ui-assests/jquery-ui.min.css">
+    <link rel="stylesheet" href="ui-assests/photon.min.css">
+    <link rel="stylesheet" href="ui-assests/custom_app.css">
+    <script>window.$ = window.jQuery = require('jquery');</script>
 
+    <script src="ui-assests/jquery-ui.min.js"></script>
     <script src="etcd_runner.js"></script>
 </head>
 <body>
 <div class="window">
 
-    <!-- Your app's content goes inside .window-content -->
+    <header class="toolbar main-app">
+        <li class="list-group-header etcd-search-bar">
+            <input class="form-control" type="text" placeholder="Search keys...." id="search_bar_input">
+        </li>
+        <button class="btn btn-primary" id="search_button" onclick="getKeys();">
+            Search
+        </button>
+        <button class="btn btn-positive pull-right" id="create_button" onclick="showCreateKeyModalForm();">
+            Create
+        </button>
+    </header>
     <div class="window-content">
-        <div class="pane-group, main_data_tab">
-            <div class="pane pane-sm sidebar">
-                <ul class="list-group">
-                    <li class="list-group-header">
-                        <input class="form-control" type="text" placeholder="Search for someone">
-                    </li>
-                    <li class="list-group-item">
-                        <div class="media-body">
-                            <p>Lorem ipsum dolor sit amet.</p>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="media-body">
-                            <p>Lorem ipsum dolor sit amet.</p>
-                        </div>
-                    </li>
-                </ul>
+        <div id="connection_form">
+            <div class="form-group">
+                <label>Connection String</label>
+                <input type="text" class="form-control connection_form_input" name ="connectionString"  placeholder="connection string.. Defaults to http://127.0.0.1:2379">
             </div>
-
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control connection_form_input" name ="username"  placeholder="username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="text" class="form-control connection_form_input" name="password"  placeholder="password">
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-form btn-positive" onclick="initalizeConnection();">Connect</button>
+            </div>
+        </div>
+        <div class="pane-group main-app">
             <div class="pane">
-                <table class="table-striped">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Kind</th>
-                        <th>Date Modified</th>
-                        <th>Author</th>
-                    </tr>
-                    </thead>
+                <table class="table-striped" id="keys_name_table">
                     <tbody>
-                    <tr>
-                        <td>bars.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>base.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>button-groups.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>buttons.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>docs.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>forms.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>grid.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>icons.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>images.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>lists.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>mixins.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>navs.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>normalize.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>photon.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>tables.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>tabs.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>utilities.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
-                    <tr>
-                        <td>variables.scss</td>
-                        <td>Document</td>
-                        <td>Oct 13, 2015</td>
-                        <td>connors</td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="pane" id="initial_details_tab">
-                <div class="form-group">
-                    <label>Connection String</label>
-                    <input type="text" class="form-control" id="connection_string" placeholder="Connection String">
-                </div>
-                <div class="form-group">
-                    <label>CHROOT</label>
-                    <input type="text" class="form-control" placeholder="CHROOT">
-                </div>
-                <div class="form-group">
-                    <label>SSL Certificate</label>
-                    <input type="text" class="form-control" placeholder="SSL Certificate">
-                </div>
-                <div class="form-group">
-                    <label>UserName</label>
-                    <input type="text" class="form-control" placeholder="User name">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="text" class="form-control" placeholder="password">
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-form btn-primary" id="connect_button" onclick="initalizeConnection();">Connect</button>
-                </div>
+            <div class="pane sidebar" id="key_details_tab">
+                <pre id="key_details_data">
+                </pre>
+                <button class="btn btn-large btn-warning" style="margin-left: 15%" onclick="showUpdateKeyModalForm();">Modify Data</button>
+                <button class="btn btn-large btn-negative pull-right" style="margin-right: 20%;" onclick="deleteKey();">Delete Key</button>
+            </div>
         </div>
     </div>
+    <footer class="toolbar toolbar-footer">
+        <h1 class="title" id="footer_title"></h1>
+    </footer>
 </div>
+<div id="create_key_form_container">
+        <div class="form-group">
+            <label>Key</label>
+            <input type="text" class="form-control create_key_form_input" name="key" placeholder="Key">
+        </div>
+        <div class="form-group">
+            <label>Value</label>
+            <textarea class="form-control create_key_form_input" name="value" placeholder="value for key"> </textarea>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-form btn-positive" onclick="createKey();">Create</button>
+        </div>
+</div>
+
+<div id="update_key_form_container">
+        <div class="form-group">
+            <label>Value</label>
+            <textarea class="form-control" placeholder="value for key" id="update_key_form_key_value"> </textarea>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-form btn-positive" onclick="updateKey();">Update</button>
+        </div>
+</div>
+<input type="hidden" id="selected_key" value="">
 </body>
 </html>

@@ -1,0 +1,50 @@
+.etcd-search-bar {
+    width: 80%;
+    list-style-type: none;
+    display: inline-block;
+}
+
+#create_button {
+    margin-top: 16px;
+    margin-right: 44px;
+}
+
+#key_details_tab{
+    max-width: 40%;
+}
+
+#key_details_data{
+    max-height: 70%;
+}
+
+.main-app {
+    z-index: -1;
+}
+
+#connection_form{
+    z-index: 2;
+    margin : auto;
+    max-height : 70%;
+    width : 70%;
+    background-color :#dddddd;
+    padding:20px;
+}
+
+#key_details_data{
+    border: 1px solid;
+    margin: 10px;
+    background-color: white;
+    border-radius: 7px;
+}
+
+#create_key_form_container{
+    display: none;
+}
+#update_key_form_container {
+    display: none;
+}
+
+.selected_key {
+    background-color: #1a82fb !important;
+    color:white;
+}

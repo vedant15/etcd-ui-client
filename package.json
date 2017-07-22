@@ -10,8 +10,13 @@
   "author": "vedant agrawal",
   "license": "MIT",
   "dependencies": {
+    "async": "^2.5.0",
     "electron": "^1.6.11",
-    "grpc" : "^1.4.1",
-    "async": "^2.5.0"
+    "jquery": "^3.2.1",
+    "request": "^2.81.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^1.5.11"
   }
 }
