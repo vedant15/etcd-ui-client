@@ -1,12 +1,26 @@
 const {ipcRenderer} = require('electron');
 const util = require('util');
 const uuid = require('uuid');
+const Datastore = require('nedb');
 
+
+const db = new Datastore({ filename: __dirname + '/saved_connections.store', autoload: true });
 const TABLE_KEY_PREFIX = 'e9e6285c';
 const HIDDEN_KEY_ID_SELECTOR = '#selected_key';
-var valueRegistry = {};
-var tableIdRegistry = {};
 
+let valueRegistry = {};
+let tableIdRegistry = {};
+let savedConnections = null;
+
+db.find({}, function (err, docs) {
+  savedConnections = docs;
+  docs.forEach(function (doc) {
+    $('#saved_connections_selector').append($('<option>', {
+      value: doc._id,
+      text: doc._id
+    }));
+  });
+});
 
 ipcRenderer.on('createKeyResponse', function(event, response){
     if (response.err) {
@@ -42,6 +56,16 @@ function initalizeConnection () {
     $('.connection_form_input').each(function () {
         connectionDetails[$(this).attr('name')] = $(this).val();
     });
+
+    $('.connection_form_input_check_box').each(function () {
+        connectionDetails[$(this).attr('name')] = $(this).is(':checked');
+    });
+
+    connectionDetails._id = connectionDetails.connectionName ? connectionDetails.connectionName.trim() : uuid.v4();
+
+    if (connectionDetails.saveDetails) {
+      db.update({_id : connectionDetails._id}, connectionDetails, { upsert: true });
+    }
 
     ipcRenderer.once('connectionResponse', function(event, response){
         if (response) {
@@ -88,7 +112,7 @@ function switchSelectedKey(key) {
 
     $(HIDDEN_KEY_ID_SELECTOR).val(key);
     $(actualId).addClass('selected_key');
-    $('#key_details_data').html('<pre>' + value + '</pre>');
+    $('#key_details_data').html('<pre style="user-select: text">' + value + '</pre>');
 }
 
 function showCreateKeyModalForm() {
@@ -142,4 +166,15 @@ function deleteKey () {
         });
         ipcRenderer.send('deleteKey', {key : requestedKey});
     }
+}
+
+function loadSavedConnection () {
+  const selectedConnection = $('#saved_connections_selector').val();
+  savedConnections.forEach(function (savedDetails) {
+    if (savedDetails._id === selectedConnection) {
+      $('.connection_form_input').each(function () {
+        $(this).val(savedDetails[$(this).attr('name')]);
+      });
+    }
+  });
 }
