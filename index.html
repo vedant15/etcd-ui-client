@@ -29,6 +29,15 @@
     </header>
     <div class="window-content">
         <div id="connection_form">
+            <div>
+                <select id="saved_connections_selector" style="float: right;" onchange="loadSavedConnection();">
+                    <option value="--">Load Saved Connection</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Connection Name</label>
+                <input type="text" class="form-control connection_form_input" name ="connectionName"  placeholder="Name of Connection...">
+            </div>
             <div class="form-group">
                 <label>Connection String (without http or https)</label>
                 <input type="text" class="form-control connection_form_input" name ="connectionString"  placeholder="connection string.. Defaults to 127.0.0.1:2379">
@@ -44,6 +53,9 @@
             <div class="form-group">
                 <label>SSL Certificate path</label>
                 <input type="text" class="form-control connection_form_input" name="sslCertificate"  placeholder="Certificate file path">
+            </div>
+            <div class="form-group">
+                <input class="connection_form_input_check_box" type="checkBox" style="margin-right: 20px" name="saveDetails">Save Connection Details ?
             </div>
             <div class="form-actions">
                 <button class="btn btn-form btn-positive" onclick="initalizeConnection();">Connect</button>
