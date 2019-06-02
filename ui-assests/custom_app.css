@@ -13,10 +13,6 @@
     max-width: 40%;
 }
 
-#key_details_data{
-    max-height: 70%;
-}
-
 .main-app {
     z-index: -1;
 }
@@ -35,6 +31,11 @@
     margin: 10px;
     background-color: white;
     border-radius: 7px;
+    max-height: 70%;
+    min-height: 40%;
+    white-space: pre-wrap;
+    user-select: text;
+    word-break: keep-all;
 }
 
 #create_key_form_container{
@@ -47,4 +48,8 @@
 .selected_key {
     background-color: #1a82fb !important;
     color:white;
+}
+
+table tbody tr td {
+    user-select: text;
 }

@@ -2,14 +2,16 @@ const electron = require('electron');
 const {app, BrowserWindow, Menu, ipcMain, dialog} = electron;
 const etcd = require('./lib');
 
-
-function processConnectionRequest(err, options) {
+function processConnectionRequest (err, options) {
   console.log(err);
   console.log(options);
 }
 
 app.on('ready', function () {
-  let win = new BrowserWindow({width: 1024, height: 1024});
+  let win = new BrowserWindow({width: 1024, height: 1024, webPreferences: {
+      nodeIntegration: true
+    }});
+
   win.loadURL(`file://${__dirname}/index.html`);
 
   //win.webContents.openDevTools();
@@ -83,5 +85,11 @@ ipcMain.on('updateKey', function (event, params) {
       result: response
     };
     event.sender.send('updateKeyResponse', finalResponse);
+  });
+});
+
+ipcMain.on('openFileSelector', function (event, params) {
+  dialog.showOpenDialog({ properties: ['openFile'] }, function (filePaths) {
+    event.sender.send('openFileSelectorResponse', filePaths ? filePaths[0] : null);
   });
 });

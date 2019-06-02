@@ -3,7 +3,6 @@ const util = require('util');
 const uuid = require('uuid');
 const Datastore = require('nedb');
 
-
 const db = new Datastore({ filename: __dirname + '/saved_connections.store', autoload: true });
 const TABLE_KEY_PREFIX = 'e9e6285c';
 const HIDDEN_KEY_ID_SELECTOR = '#selected_key';
@@ -103,7 +102,7 @@ function getKeys () {
 
 function switchSelectedKey(key) {
     const actualId = '#' + getKeyTableId(key);
-    const value = valueRegistry[key];
+    let value = valueRegistry[key];
 
     if ($(HIDDEN_KEY_ID_SELECTOR).val()) {
         const oldSelectedId = '#' + getKeyTableId($(HIDDEN_KEY_ID_SELECTOR).val());
@@ -112,7 +111,17 @@ function switchSelectedKey(key) {
 
     $(HIDDEN_KEY_ID_SELECTOR).val(key);
     $(actualId).addClass('selected_key');
-    $('#key_details_data').html('<pre style="user-select: text">' + value + '</pre>');
+
+    if (value && value.indexOf('{') === 0) {
+        try {
+            const temp = JSON.parse(value);
+            value = JSON.stringify(temp, undefined , 2);
+        } catch (err) {}
+    }
+
+    $('#key_details_data').html(value);
+
+    $(actualId).select();
 }
 
 function showCreateKeyModalForm() {
@@ -140,9 +149,16 @@ function showUpdateKeyModalForm() {
 }
 
 function updateKey() {
+    let updatedValue = $('#update_key_form_key_value').val();
+
+    try {
+        const temp = JSON.parse(updatedValue);
+        updatedValue = JSON.stringify(temp);
+    } catch (err) {}
+
     const keyDetails = {
         key : $(HIDDEN_KEY_ID_SELECTOR).val(),
-        value : $('#update_key_form_key_value').val()
+        value : updatedValue
     };
 
     $('#update_key_form_container').dialog('destroy');
@@ -177,4 +193,16 @@ function loadSavedConnection () {
       });
     }
   });
+}
+
+
+function openFileSelector () {
+    ipcRenderer.send('openFileSelector');
+
+    ipcRenderer.once('openFileSelectorResponse', function(event, response){
+        if (response) {
+            $('#ca_file_path').val(response);
+        }
+    });
+
 }
