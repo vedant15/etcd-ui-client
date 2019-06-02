@@ -1,6 +1,6 @@
 {
   "name": "etcd-ui-client",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "just another ui for etcd",
   "main": "main.js",
   "scripts": {
@@ -10,17 +10,17 @@
   "author": "vedant agrawal",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.5.0",
-    "electron": "~2.0.1",
-    "grpc": "~1.11.3",
-    "jquery": "^3.2.1",
-    "lodash": "^4.17.4",
-    "nedb": "~1.8.0",
-    "request": "^2.81.0",
-    "uuid": "^3.1.0"
+    "async": "3.0.1",
+    "electron": "5.0.2",
+    "grpc": "^1.21.1",
+    "jquery": "3.2.1",
+    "lodash": "4.17.11",
+    "nedb": "1.8.0",
+    "request": "2.88.0",
+    "uuid": "3.3.2"
   },
   "devDependencies": {
-    "electron-packager": "~12.1.0",
-    "electron-rebuild": "~1.7.3"
+    "electron-packager": "13.1.1",
+    "electron-rebuild": "1.8.5"
   }
 }

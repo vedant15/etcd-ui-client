@@ -8,10 +8,14 @@
     <link rel="stylesheet" href="ui-assests/jquery-ui.min.css">
     <link rel="stylesheet" href="ui-assests/photon.min.css">
     <link rel="stylesheet" href="ui-assests/custom_app.css">
-    <script>window.$ = window.jQuery = require('jquery');</script>
 
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+    <script src="ui-assests/jquery.min.js"></script>
     <script src="ui-assests/jquery-ui.min.js"></script>
     <script src="etcd_runner.js"></script>
+
+    <script>if (window.module) module = window.module;</script>
 </head>
 <body>
 <div class="window">
@@ -51,8 +55,19 @@
                 <input type="text" class="form-control connection_form_input" name="password"  placeholder="password">
             </div>
             <div class="form-group">
-                <label>SSL Certificate path</label>
-                <input type="text" class="form-control connection_form_input" name="sslCertificate"  placeholder="Certificate file path">
+                <label>CA Certificate path</label>
+                <table>
+                    <tr>
+                        <td style="padding:0;width:80%">
+                            <input type="text" class="form-control connection_form_input" name="sslCertificate" id="ca_file_path" placeholder="Certificate file path">
+                        </td>
+                        <td>
+                            <button class="btn btn-form btn-primary" onclick="openFileSelector();">Select CA File</button>
+                        </td>
+                    </tr>
+                </table>
+
+
             </div>
             <div class="form-group">
                 <input class="connection_form_input_check_box" type="checkBox" style="margin-right: 20px" name="saveDetails">Save Connection Details ?
